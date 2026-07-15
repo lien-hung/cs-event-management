@@ -1,4 +1,4 @@
-using EventManagement.Enums;
+using EventManagement.Constants;
 
 namespace EventManagement.Models;
 

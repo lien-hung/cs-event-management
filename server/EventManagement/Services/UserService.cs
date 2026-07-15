@@ -13,6 +13,7 @@ interface IUserService
     Task<UserDto?> GetUserByIdAsync(int id);
     Task<IEnumerable<UserDto>> GetAllUsersAsync();
     Task UpdateUserAsync(int id, UpdateUserDto dto);
+    Task UpdateUserRoleAsync(string email, string role);
     Task DeleteUserAsync(int id);
 }
 
@@ -73,6 +74,14 @@ public class UserService : IUserService
     {
         var toUpdate = await _context.Users.FindAsync(id) ?? throw new Exception($"User with ID {id} not found");
         toUpdate.Update(dto);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateUserRoleAsync(string email, string role)
+    {
+        var toUpdate = await _context.Users.FirstOrDefaultAsync(u => u.Email == email)
+            ?? throw new Exception($"User with email '{email}' not found");
+        toUpdate.UpdateRole(role);
         await _context.SaveChangesAsync();
     }
 }

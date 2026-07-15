@@ -1,27 +1,22 @@
-using EventManagement.Enums;
-
 namespace EventManagement.DTOs;
 
 public record CreateUserDto(
     string Username,
-    string Password,
     string StudentId,
     string Name,
     string Email,
     string PhoneNumber,
     string Avatar,
-    UserRole Role
+    string Role
 );
 
 public record UpdateUserDto(
     string Username,
-    string Password,
     string StudentId,
     string Name,
     string Email,
     string PhoneNumber,
-    string Avatar,
-    UserRole Role
+    string Avatar
 );
 
 public record UserDto(
@@ -32,5 +27,5 @@ public record UserDto(
     string Email,
     string PhoneNumber,
     string Avatar,
-    UserRole Role
+    string Role
 );

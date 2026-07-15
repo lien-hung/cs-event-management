@@ -1,18 +1,16 @@
 using EventManagement.DTOs;
-using EventManagement.Enums;
 
 namespace EventManagement.Models;
 
 public class User : EntityBase
 {
     public string Username { get; private set; } = string.Empty;
-    public string Password { get; private set; } = string.Empty;
     public string StudentId { get; private set; } = string.Empty;
     public string Name { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
     public string PhoneNumber { get; private set; } = string.Empty;
     public string Avatar { get; private set; } = string.Empty;
-    public UserRole Role { get; private set; }
+    public string Role { get; private set; } = string.Empty;
 
     public virtual ICollection<AttendanceRecord> AttendanceRecords { get; } = [];
     public virtual ICollection<EventFeedback> Feedbacks { get; } = [];
@@ -20,11 +18,10 @@ public class User : EntityBase
 
     public static User Create(CreateUserDto dto)
     {
-        ValidateInputs(dto.Username, dto.Password);
+        ValidateInputs(dto.Username);
         return new User()
         {
             Username = dto.Username,
-            Password = dto.Password,
             StudentId = dto.StudentId,
             Name = dto.Name,
             Email = dto.Email,
@@ -36,29 +33,28 @@ public class User : EntityBase
 
     public void Update(UpdateUserDto dto)
     {
-        ValidateInputs(dto.Username, dto.Password);
+        ValidateInputs(dto.Username);
 
         Username = dto.Username;
-        Password = dto.Password;
         StudentId = dto.StudentId;
         Name = dto.Name;
         Email = dto.Email;
         PhoneNumber = dto.PhoneNumber;
         Avatar = dto.Avatar;
-        Role = dto.Role;
         ModifiedAt = DateTimeOffset.UtcNow;
     }
 
-    private static void ValidateInputs(string username, string password)
+    public void UpdateRole(string role)
+    {
+        Role = role;
+        ModifiedAt = DateTimeOffset.UtcNow;
+    }
+
+    private static void ValidateInputs(string username)
     {
         if (string.IsNullOrWhiteSpace(username))
         {
             throw new ArgumentException("Username is required", nameof(username));
-        }
-
-        if (string.IsNullOrWhiteSpace(password))
-        {
-            throw new ArgumentException("Password is required", nameof(password));
         }
     }
 }

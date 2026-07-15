@@ -1,4 +1,4 @@
-namespace EventManagement.Enums;
+namespace EventManagement.Constants;
 
 public enum AttendanceStatus
 {

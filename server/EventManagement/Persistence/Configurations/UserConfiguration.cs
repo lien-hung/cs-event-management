@@ -16,10 +16,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasMaxLength(255);
 
-        builder.Property(u => u.Password)
-            .IsRequired()
-            .HasMaxLength(255);
-
         builder.Property(u => u.StudentId)
             .HasMaxLength(20);
 
@@ -30,6 +26,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(100);
 
         builder.Property(u => u.PhoneNumber)
+            .HasMaxLength(20);
+
+        builder.Property(u => u.Role)
             .HasMaxLength(20);
 
         builder.Property(u => u.CreatedAt)
