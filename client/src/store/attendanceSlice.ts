@@ -45,6 +45,28 @@ export const getAttendanceById = createAsyncThunk(
   }
 );
 
+export const getAttendanceByEvent = createAsyncThunk(
+  "attendance/getAttendanceByEvent",
+  async (eventId: number, { rejectWithValue }) => {
+    try {
+      return await API.get<AttendanceRecord[]>(`api/event/${eventId}/attendance`);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const getAttendanceByUser = createAsyncThunk(
+  "attendance/getAttendanceByUser",
+  async (userId: number, { rejectWithValue }) => {
+    try {
+      return await API.get<AttendanceRecord[]>(`api/user/${userId}/attendance`);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const addAttendance = createAsyncThunk(
   "attendance/addAttendance",
   async (payload: CreateAttendanceDto, { rejectWithValue }) => {
@@ -105,6 +127,28 @@ const attendanceSlice = createSlice({
       .addCase(getAttendanceById.fulfilled, (state, action) => {
         state.isLoading = false;
         state.attendance = [action.payload];
+      })
+      .addCase(getAttendanceByEvent.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAttendanceByEvent.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error;
+      })
+      .addCase(getAttendanceByEvent.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.attendance = action.payload;
+      })
+      .addCase(getAttendanceByUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAttendanceByUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error;
+      })
+      .addCase(getAttendanceByUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.attendance = action.payload;
       })
       .addCase(updateAttendanceStatus.pending, (state) => {
         state.isLoading = true;

@@ -45,6 +45,17 @@ export const getFeedback = createAsyncThunk(
   }
 );
 
+export const getFeedbackByEvent = createAsyncThunk(
+  "feedback/getFeedbackByEvent",
+  async (eventId: number, { rejectWithValue }) => {
+    try {
+      return await API.get<EventFeedback[]>(`api/event/${eventId}/feedbacks`);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
 export const deleteFeedback = createAsyncThunk(
   "feedback/deleteFeedback",
   async (id: number, { rejectWithValue }) => {
@@ -92,6 +103,17 @@ const feedbackSlice = createSlice({
         state.feedbacks = action.payload;
       })
       .addCase(getFeedback.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error;
+      })
+      .addCase(getFeedbackByEvent.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getFeedbackByEvent.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.feedbacks = action.payload;
+      })
+      .addCase(getFeedbackByEvent.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error;
       })

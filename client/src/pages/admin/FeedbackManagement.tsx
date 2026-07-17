@@ -69,7 +69,7 @@ export const FeedbackManagement = () => {
                 feedback.map(
                   ({ id, user, event, content, createdAt }, index) => {
                     const isLast = index === feedback.length - 1;
-                    const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+                    const classes = isLast ? "px-4 py-3" : "px-4 py-3 border-b border-blue-gray-50";
 
                     return (
                       <tr key={id}>
@@ -86,12 +86,12 @@ export const FeedbackManagement = () => {
                           <span className="text-sm font-normal leading-none">{content}</span>
                         </td>
                         <td className={classes}>
-                          <span className="text-sm font-normal leading-none">{createdAt.toLocaleDateString("en-GB")}</span>
+                          <span className="text-sm font-normal leading-none">{new Date(createdAt).toLocaleDateString("en-GB")}</span>
                         </td>
 
                         <td className={classes}>
                           <button
-                            className="inline-flex items-center gap-2 justify-center px-8 py-4 text-white bg-red-500 rounded-lg h-10"
+                            className="inline-flex items-center gap-2 justify-center px-4! py-2 text-white bg-red-500! rounded-lg! h-10"
                             onClick={() => handleDelete(id)}
                           >
                             <TrashIcon className="h-4 w-4" />

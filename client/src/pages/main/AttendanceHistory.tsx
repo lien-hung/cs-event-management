@@ -2,17 +2,16 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { AttendanceStatus } from "../../constants/attendance";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { getAttendance } from "../../store/attendanceSlice";
+import { getAttendanceByUser } from "../../store/attendanceSlice";
 
 export const AttendanceHistory = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const auth = useAppSelector((state) => state.auth.currentUser);
-  const attendance = useAppSelector((state) => state.attendance.attendance);
-  const myAttendance = attendance.filter((a) => a.user?.id === auth.id);
+  const myAttendance = useAppSelector((state) => state.attendance.attendance);
 
-  useEffect(() => { dispatch(getAttendance()) }, [dispatch]);
+  useEffect(() => { dispatch(getAttendanceByUser(auth.id)) }, [auth.id, dispatch]);
 
   if (!auth) {
     navigate("/login");
@@ -21,65 +20,16 @@ export const AttendanceHistory = () => {
 
   return (
     <div className="pt-36">
-      <div className="invoice-container container-xxl mx-auto my-0 p-5 border rounded-lg bg-white shadow-md">
+      <div className="invoice-container container-xxl mx-auto mt-4 mb-0 p-5 border rounded-lg bg-white shadow-md">
         <div className="invoice-wrap">
           <div className="invoice-inner">
-            <table border={0} cellPadding="0" cellSpacing="0" width="100%" className="mb-4" >
-              <tbody>
-                <tr>
-                  <td align="right" valign="top">
-                    <div className="business_info">
-                      <table border={0} cellPadding="0" cellSpacing="0" width="100%" >
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div
-                                className="mce-content-body"
-                                id="business_info_editor"
-                                style={{
-                                  width: "255px",
-                                  minHeight: "80px",
-                                  position: "relative",
-                                }}
-                                spellCheck="false"
-                              >
-                                <p style={{ fontSize: "20pt" }} data-mce-style="font-size: 20pt;">
-                                  UEH EVENTS
-                                </p>
-                                <p className="text-lg">
-                                  279 Nguyễn Tri Phương
-                                  <br /> Phường 5, Quận 10, TP.HCM
-                                  <br /> <br /> 0123 456 789
-                                  <br /> events.ueh@gmail.com
-                                </p>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div
-              className="invoice-address pt-8"
-              style={{ borderTop: "3px double #000000" }}
-            >
+            <div className="invoice-address pt-8">
               <table border={0} cellPadding="0" cellSpacing="0" width="100%">
                 <tbody>
                   <tr>
                     <td align="right" colSpan={2} valign="top">
-                      <div
-                        className="mce-content-body"
-                        style={{ textAlign: "center" }}
-                        spellCheck="false"
-                      >
-                        <span
-                          style={{ fontSize: "20pt" }}
-                          data-mce-style="font-size: 20pt;"
-                        >
+                      <div className="mce-content-body" style={{ textAlign: "center" }} spellCheck="false">
+                        <span style={{ fontSize: "20pt" }} data-mce-style="font-size: 20pt;">
                           Lịch Sử Tham Gia
                         </span>
                       </div>
@@ -154,7 +104,7 @@ export const AttendanceHistory = () => {
                         <span>{item.event?.name}</span>
                       </td>
                       <td>
-                        <span>{item.createdAt.toLocaleDateString("vi-VN")}</span>
+                        <span>{new Date(item.createdAt).toLocaleString("en-GB")}</span>
                       </td>
                       <td>
                         <span>{{

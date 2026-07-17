@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import * as yup from "yup";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { getUserById, updateUser } from "../../store/userSlice";
+import defaultAvatar from "../../assets/avatar.jpg";
 
 const schema = yup.object().shape({
   name: yup.string().required("Vui lòng nhập tên"),
@@ -26,7 +27,9 @@ export const UpdateProfile = () => {
   const user = useAppSelector((state) => state.user.users[0]);
   const isLoading = useAppSelector((state) => state.user.isLoading);
   const [uploaded, setUploaded] = useState<File>();
-  const [avatar, setAvatar] = useState(user.avatar);
+  const [avatar, setAvatar] = useState((user && user.avatar) ? user.avatar : defaultAvatar);
+
+  if (!user) return;
 
   const handleSelectAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -43,17 +46,17 @@ export const UpdateProfile = () => {
   const handleUpdateUser = async (data: yup.InferType<typeof schema>) => {
     const { name, phoneNumber } = data;
     const submittedData = { studentId: user.studentId, name, phoneNumber, avatar: uploaded ? "" : user.avatar };
-    dispatch(updateUser({ id: Number(id), data: submittedData, imageFile: uploaded }));
+    await dispatch(updateUser({ id: Number(id), data: submittedData, imageFile: uploaded }));
   };
 
   return (
-    <div className="container mt-28">
+    <div className="container mt-6!">
       <form
         onSubmit={handleSubmit(handleUpdateUser)}
-        className="container-fluid bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="container-fluid bg-white shadow-md rounded px-8! pt-6! pb-8! mb-4"
         encType="multipart/form-data"
       >
-        <h1 style={{ fontSize: "25px", marginLeft: "50px" }}>
+        <h1 style={{ fontSize: "25px" }}>
           Cập Nhật Thông Tin
         </h1>
         {isLoading && (
@@ -111,7 +114,7 @@ export const UpdateProfile = () => {
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500! hover:bg-blue-700! text-white font-bold! py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           >
             Cập nhật thông tin
           </button>

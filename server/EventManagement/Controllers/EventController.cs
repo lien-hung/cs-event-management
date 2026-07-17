@@ -41,5 +41,17 @@ public static class EventController
             await service.DeleteEventAsync(id);
             return TypedResults.NoContent();
         });
+
+        eventApi.MapGet("/{id}/attendance", async (IEventService service, int id) =>
+        {
+            var attendance = await service.GetAttendanceByEventAsync(id);
+            return TypedResults.Ok(attendance);
+        });
+
+        eventApi.MapGet("/{id}/feedbacks", async (IEventService service, int id) =>
+        {
+            var feedbacks = await service.GetFeedbackByEventAsync(id);
+            return TypedResults.Ok(feedbacks);
+        });
     }
 }

@@ -43,12 +43,12 @@ export const AddAccount = () => {
     const submittedData = {
       ...data,
       username: data.studentId,
-      password: data.studentId, // mặc định là MSSV đã cấp
+      password: `${data.studentId}@Ueh`,
       avatar: ""
     }
 
     try {
-      dispatch(addAccount({ data: submittedData, imageFile: imageUpload }));
+      await dispatch(addAccount({ data: submittedData, imageFile: imageUpload }));
       Swal.fire({
         icon: "success",
         title: "Thêm tài khoản thành công",

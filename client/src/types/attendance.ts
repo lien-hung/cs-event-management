@@ -16,6 +16,6 @@ export interface AttendanceRecord {
   user?: User;
   event?: Event;
   attendanceStatus: number;
-  createdAt: Date;
-  modifiedAt: Date;
+  createdAt: string;
+  modifiedAt: string;
 }

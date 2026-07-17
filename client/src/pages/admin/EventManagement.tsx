@@ -37,11 +37,11 @@ export const EventManagement = () => {
     <div className="content-wrapper">
       <div className="ml-2 w-full overflow-y-auto">
         <div className="content-header rounded-none">
-          <div className="mb-12 flex flex-col justify-between gap-8 md:flex-row md:items-center">
+          <div className="mb-4! flex flex-col justify-between gap-8 md:flex-row md:items-center">
             <div className="font-bold mt-7 text-2xl ml-6">
               <h1>Quản Lý Sự Kiện</h1>
             </div>
-            <div className="flex shrink-0 gap-2 md:w-max mt-10 mr-3 items-center">
+            <div className="flex items-center shrink-0 gap-2 md:w-max mt-10 mr-3">
               <div className="flex items-center gap-5 w-80 h-10 border border-gray-200 rounded-lg p-3">
                 <input
                   type="text"
@@ -67,14 +67,12 @@ export const EventManagement = () => {
                   </svg>
                 </span>
               </div>
-              <div className="mt-2 h-14">
-                <Link to="/admin/add-event">
-                  <button className="flex justify-center items-center gap-1 rounded-md! px-2 h-11 bg-blue-500! hover:bg-blue-600! text-md">
-                    <PlusIcon className="h-7 w-7" />
-                    Thêm
-                  </button>
-                </Link>
-              </div>
+              <Link to="/admin/add-event">
+                <button className="flex justify-center items-center gap-1 rounded-md! px-3 h-11 bg-blue-500! hover:bg-blue-600! text-md">
+                  <PlusIcon className="h-7 w-7" />
+                  Thêm
+                </button>
+              </Link>
             </div>
           </div>
         </div>

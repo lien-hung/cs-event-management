@@ -109,7 +109,7 @@ export const AttendanceManagement = () => {
                     index
                   ) => {
                     const isLast = index === attendance.length - 1;
-                    const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+                    const classes = isLast ? "px-4 py-3" : "px-4 py-3 border-b border-blue-gray-50";
 
                     return (
                       <tr key={id}>
@@ -126,7 +126,7 @@ export const AttendanceManagement = () => {
                           <span className="text-sm font-normal">{event?.name}</span>
                         </td>
                         <td className={classes}>
-                          <span className="text-sm font-normal">{createdAt.toLocaleDateString("en-GB")}</span>
+                          <span className="text-sm font-normal">{new Date(createdAt).toLocaleString("en-GB")}</span>
                         </td>
                         <td className={classes}>
                           <span className="text-sm font-normal">
@@ -141,7 +141,7 @@ export const AttendanceManagement = () => {
                         {attendanceStatus === AttendanceStatus.Registered && (
                           <td className={classes}>
                             <button
-                              className="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-full"
+                              className="bg-green-500! hover:bg-green-600! text-white font-semibold py-2 px-4 rounded-full!"
                               onClick={() => handleUpdateStatus(id)}
                             >
                               Cập nhật

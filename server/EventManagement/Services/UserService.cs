@@ -13,6 +13,7 @@ interface IUserService
     Task<UserDto?> GetUserByIdAsync(int id);
     Task<UserDto?> GetUserByEmailAsync(string email);
     Task<IEnumerable<UserDto>> GetAllUsersAsync();
+    Task<IEnumerable<AttendanceRecordDto>> GetAttendanceByUserAsync(int userId);
     Task UpdateUserAsync(int id, UpdateUserDto dto);
     Task UpdateUserRoleAsync(string email, string role);
     Task DeleteUserAsync(int id);
@@ -57,6 +58,18 @@ public class UserService : IUserService
             .ToListAsync();
 
         return users.Select(u => u.ToDto());
+    }
+
+    public async Task<IEnumerable<AttendanceRecordDto>> GetAttendanceByUserAsync(int userId)
+    {
+        var records = await _context.AttendanceRecords
+            .AsNoTracking()
+            .Include(ar => ar.Event)
+            .Include(ar => ar.User)
+            .Where(ar => ar.UserId == userId)
+            .ToListAsync();
+
+        return records.Select(r => r.ToDto());
     }
 
     public async Task<UserDto?> GetUserByEmailAsync(string email)

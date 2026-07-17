@@ -21,7 +21,7 @@ export function EventList() {
   }, [dispatch]);
 
   return (
-    <div className="container-fluid pt-36 wow fadeInUp" data-wow-delay="0.1s">
+    <div className="container-fluid pt-8! wow animate__fadeInUp" data-wow-delay="0.1s">
       <div className="container">
         <div className="row">
           <div className="col-lg-5">
@@ -31,7 +31,7 @@ export function EventList() {
               </h5>
             </div>
             <div className="col-lg-10 my-4 flex ">
-              <h5 className="mr-3 mt-2">Tùy Chọn: </h5>
+              <h5 className="mr-3! mt-2">Tùy Chọn: </h5>
               <div className="w-72">
                 <select
                   value={selectedCategory}

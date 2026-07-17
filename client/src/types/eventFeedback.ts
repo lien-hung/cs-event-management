@@ -16,6 +16,6 @@ export interface EventFeedback {
   user?: User;
   event?: Event;
   content: string;
-  createdAt: Date;
-  modifiedAt: Date;
+  createdAt: string;
+  modifiedAt: string;
 }

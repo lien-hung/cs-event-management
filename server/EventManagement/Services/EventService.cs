@@ -1,4 +1,5 @@
 using EventManagement.DTOs;
+using EventManagement.Mappers;
 using EventManagement.Models;
 using EventManagement.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,8 @@ public interface IEventService
     Task<IEnumerable<EventDto>> GetAllEventsAsync();
     Task UpdateEventAsync(int id, UpdateEventDto dto);
     Task DeleteEventAsync(int id);
+    Task<IEnumerable<AttendanceRecordDto>> GetAttendanceByEventAsync(int eventId);
+    Task<IEnumerable<EventFeedbackDto>> GetFeedbackByEventAsync(int eventId);
 }
 
 public class EventService : IEventService
@@ -72,6 +75,18 @@ public class EventService : IEventService
         ));
     }
 
+    public async Task<IEnumerable<AttendanceRecordDto>> GetAttendanceByEventAsync(int eventId)
+    {
+        var records = await _context.AttendanceRecords
+            .AsNoTracking()
+            .Include(ar => ar.Event)
+            .Include(ar => ar.User)
+            .Where(ar => ar.EventId == eventId)
+            .ToListAsync();
+
+        return records.Select(r => r.ToDto());
+    }
+
     public async Task<EventDto?> GetEventByIdAsync(int id)
     {
         var ev = await _context.Events
@@ -94,6 +109,18 @@ public class EventService : IEventService
             ev.Location,
             ev.Capacity
         );
+    }
+
+    public async Task<IEnumerable<EventFeedbackDto>> GetFeedbackByEventAsync(int eventId)
+    {
+        var feedbacks = await _context.EventFeedbacks
+            .AsNoTracking()
+            .Include(ef => ef.Event)
+            .Include(ef => ef.User)
+            .Where(ef => ef.EventId == eventId)
+            .ToListAsync();
+
+        return feedbacks.Select(f => f.ToDto());
     }
 
     public async Task UpdateEventAsync(int id, UpdateEventDto dto)

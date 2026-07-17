@@ -41,5 +41,11 @@ public static class UserController
             await service.DeleteUserAsync(id);
             return TypedResults.NoContent();
         });
+
+        userApi.MapGet("/{id}/attendance", async (IUserService service, int id) =>
+        {
+            var attendance = await service.GetAttendanceByUserAsync(id);
+            return TypedResults.Ok(attendance);
+        });
     }
 }

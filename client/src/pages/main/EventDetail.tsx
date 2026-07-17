@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router";
 import defaultAvatar from "../../assets/avatar.jpg";
 import { AttendanceStatus } from "../../constants/attendance";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { addAttendance, getAttendance } from "../../store/attendanceSlice";
+import { addAttendance, getAttendanceByEvent } from "../../store/attendanceSlice";
 import { getEventById } from "../../store/eventSlice";
-import { addFeedback, getFeedback } from "../../store/feedbackSlice";
+import { addFeedback, getFeedbackByEvent } from "../../store/feedbackSlice";
 import { getUsers } from "../../store/userSlice";
 import type { CreateAttendanceDto } from "../../types/attendance";
 import type { CreateFeedbackDto } from "../../types/eventFeedback";
@@ -19,21 +19,26 @@ export function EventDetail() {
   const event = useAppSelector((state) => state.event.events[0]);
   const users = useAppSelector((state) => state.user.users);
   const auth = useAppSelector((state) => state.auth);
-  const feedbackList = useAppSelector((state) => state.feedback.feedbacks.filter((f) => f.event?.id === Number(id)));
-  const attendance = useAppSelector((state) => state.attendance.attendance.filter((a) => a.event?.id === Number(id)));
+  const feedbackList = useAppSelector((state) => state.feedback.feedbacks);
+  const attendance = useAppSelector((state) => state.attendance.attendance);
 
   const userId = auth.currentUser?.id;
 
   useEffect(() => {
     dispatch(getUsers());
     dispatch(getEventById(Number(id)));
-    dispatch(getAttendance());
-    dispatch(getFeedback());
-  }, [id, dispatch, feedbackList.length]);
+    dispatch(getAttendanceByEvent(Number(id)));
+    dispatch(getFeedbackByEvent(Number(id)));
+  }, [dispatch, id]);
+
+  if (!event) return;
 
   const nowDate = new Date();
+
+  const isUpcoming = nowDate < new Date(event.startDate);
+  const isEnded = nowDate > new Date(event.endDate);
+
   const isRegistered = attendance.some((item) => item.event?.id === id && item.user?.id === userId);
-  const isCurrent = nowDate >= new Date(event?.startDate) && nowDate <= new Date(event?.endDate);
   const remainingCapacity = event.capacity - attendance.length;
 
   const handleAddFeedback = (feedback: string) => {
@@ -60,7 +65,7 @@ export function EventDetail() {
   };
 
   return (
-    <div className="container py-5 mt-24">
+    <div className="container py-5">
       <div className="row">
         <div className="col-md-5">
           <img
@@ -76,7 +81,7 @@ export function EventDetail() {
           <h2 className="text-danger">Thời gian: {new Date(event.startDate).toLocaleDateString("en-GB")} đến {new Date(event.endDate).toLocaleDateString("en-GB")}</h2>
           <p className="lead" dangerouslySetInnerHTML={{ __html: event.description }}></p>
           {auth.currentUser
-            ? (isCurrent && event.capacity > attendance.length
+            ? (isUpcoming && remainingCapacity > 0
               ? (
                 <button
                   onClick={handleRegister}
@@ -88,7 +93,7 @@ export function EventDetail() {
               )
               : (
                 <button className="btn btn-secondary btn-lg btn-block mb-2" disabled>
-                  {isCurrent ? "Đã kết thúc" : "Hết suất"}
+                  {remainingCapacity <= 0 ? "Hết suất" : (isEnded ? "Đã kết thúc" : "Đang diễn ra")}
                 </button>
               ))
             : <p className="lead" style={{ fontStyle: "italic" }}>Vui lòng đăng nhập để tiếp tục.</p>
@@ -99,7 +104,7 @@ export function EventDetail() {
       {/* Comment Section */}
       <div className="row mt-5">
         <div className="col">
-          <h3>Phản Hồi</h3>
+          <h3 className="pt-0 text-black">Phản Hồi</h3>
           <form>
             <div className="form-group">
               <label htmlFor="message">Phản Hồi:</label>
@@ -137,7 +142,7 @@ export function EventDetail() {
                     className="w-12.5 rounded-full"
                   />
                   <div className="media-body">
-                    <h5 className="mt-0">{user?.username}</h5>
+                    <h5 className="mt-0">{user?.name}</h5>
                     <p>{item.content}</p>
                     <small className="text-muted">
                       {new Date(item.createdAt).toLocaleDateString()}

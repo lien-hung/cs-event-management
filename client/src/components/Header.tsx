@@ -72,7 +72,7 @@ export const Header = () => {
                   data-bs-toggle="dropdown"
                   role="button"
                 >
-                  {user.username}
+                  {user.name}
                 </a>
               ) : (
                 <div className="flex items-center">
