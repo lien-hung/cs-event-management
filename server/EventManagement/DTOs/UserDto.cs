@@ -11,10 +11,8 @@ public record CreateUserDto(
 );
 
 public record UpdateUserDto(
-    string Username,
     string StudentId,
     string Name,
-    string Email,
     string PhoneNumber,
     string Avatar
 );

@@ -70,7 +70,7 @@ public class EventFeedbackService : IEventFeedbackService
     {
         var toUpdate = await _context.EventFeedbacks.FindAsync(id)
             ?? throw new Exception($"Event feedback with ID {id} not found");
-        toUpdate.Update(dto.UserId, dto.EventId, dto.Content);
+        toUpdate.Update(dto.Content);
         await _context.SaveChangesAsync();
     }
 }

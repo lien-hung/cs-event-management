@@ -70,7 +70,7 @@ public class AttendanceRecordService : IAttendanceRecordService
     {
         var toUpdate = await _context.AttendanceRecords.FindAsync(id) 
             ?? throw new Exception($"Attendance record with ID {id} not found");
-        toUpdate.Update(dto.UserId, dto.EventId, dto.AttendanceStatus);
+        toUpdate.Update(dto.AttendanceStatus);
         await _context.SaveChangesAsync();
     }
 }

@@ -15,12 +15,9 @@ public class EventFeedback : EntityBase
         return new EventFeedback() { UserId = userId, EventId = eventId, Content = content };
     }
 
-    public void Update(int userId, int eventId, string content)
+    public void Update(string content)
     {
         ValidateInputs(content);
-
-        UserId = userId;
-        EventId = eventId;
         Content = content;
         ModifiedAt = DateTimeOffset.UtcNow;
     }

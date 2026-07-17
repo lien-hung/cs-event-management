@@ -39,17 +39,18 @@ public static class AuthController
             request.Name,
             request.Email,
             request.PhoneNumber,
-            "",
+            request.Avatar,
             UserRole.User
         ));    
 
         return Results.Ok();
     }
 
-    private static async Task<IResult> LoginAsync(LoginRequest request, UserManager<IdentityUser> userManager, ITokenService tokenService)
+    private static async Task<IResult> LoginAsync(LoginRequest request, UserManager<IdentityUser> userManager, IUserService userService, ITokenService tokenService)
     {
         var user = await userManager.FindByEmailAsync(request.Email);
-        if (user is null || !await userManager.CheckPasswordAsync(user, request.Password))
+        var userInDb = await userService.GetUserByEmailAsync(request.Email);
+        if (user is null || userInDb is null || !await userManager.CheckPasswordAsync(user, request.Password))
         {
             return Results.Unauthorized();
         }
@@ -57,7 +58,7 @@ public static class AuthController
         var roles = await userManager.GetRolesAsync(user);
         var (token, expiresAt) = tokenService.CreateToken(user, roles);
 
-        return Results.Ok(new AuthResponse(user.Id, user.Email!, roles, token, expiresAt));        
+        return Results.Ok(new AuthResponse(userInDb, user.Email!, roles, token, expiresAt));        
     }
 
     private static async Task<IResult> AddRoleAsync(AddRoleRequest request, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IUserService userService)

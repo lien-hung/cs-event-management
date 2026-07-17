@@ -33,12 +33,8 @@ public class User : EntityBase
 
     public void Update(UpdateUserDto dto)
     {
-        ValidateInputs(dto.Username);
-
-        Username = dto.Username;
         StudentId = dto.StudentId;
         Name = dto.Name;
-        Email = dto.Email;
         PhoneNumber = dto.PhoneNumber;
         Avatar = dto.Avatar;
         ModifiedAt = DateTimeOffset.UtcNow;

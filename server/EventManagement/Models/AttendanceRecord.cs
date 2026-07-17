@@ -21,10 +21,8 @@ public class AttendanceRecord : EntityBase
         };
     }
 
-    public void Update(int userId, int eventId, AttendanceStatus attendanceStatus)
+    public void Update(AttendanceStatus attendanceStatus)
     {
-        UserId = userId;
-        EventId = eventId;
         AttendanceStatus = attendanceStatus;
         ModifiedAt = DateTimeOffset.UtcNow;
     }

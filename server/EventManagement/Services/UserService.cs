@@ -11,6 +11,7 @@ interface IUserService
 {
     Task<UserDto> CreateUserAsync(CreateUserDto dto);
     Task<UserDto?> GetUserByIdAsync(int id);
+    Task<UserDto?> GetUserByEmailAsync(string email);
     Task<IEnumerable<UserDto>> GetAllUsersAsync();
     Task UpdateUserAsync(int id, UpdateUserDto dto);
     Task UpdateUserRoleAsync(string email, string role);
@@ -56,6 +57,18 @@ public class UserService : IUserService
             .ToListAsync();
 
         return users.Select(u => u.ToDto());
+    }
+
+    public async Task<UserDto?> GetUserByEmailAsync(string email)
+    {
+        var user = await _context.Users
+            .AsNoTracking()
+            .Include(u => u.Feedbacks)
+            .Include(u => u.AttendanceRecords)
+            .Include(u => u.Scorecard)
+            .FirstOrDefaultAsync(u => u.Email == email);
+
+        return user?.ToDto();
     }
 
     public async Task<UserDto?> GetUserByIdAsync(int id)
