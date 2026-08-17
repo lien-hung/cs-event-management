@@ -92,7 +92,7 @@ const userSlice = createSlice({
       })
       .addCase(getUserById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.users = [action.payload];
+        state.users = action.payload ? [action.payload] : [];
       })
       .addCase(getUserById.rejected, (state, action) => {
         state.isLoading = false;
@@ -103,7 +103,7 @@ const userSlice = createSlice({
       })
       .addCase(getUsers.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.users = action.payload;
+        state.users = action.payload ?? [];
       })
       .addCase(getUsers.rejected, (state, action) => {
         state.isLoading = false;

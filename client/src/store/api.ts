@@ -11,7 +11,9 @@ const API = {
     }
 
     const response = await fetch(url, config);
-    return await response.json() as T;
+    if (response.ok && response.headers.get("Content-Type")?.includes("json")) {
+      return await response.json() as T;
+    }
   },
 
   get: async <T>(endpoint: string, config: RequestInit = {}) =>

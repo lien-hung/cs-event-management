@@ -104,7 +104,9 @@ const attendanceSlice = createSlice({
       })
       .addCase(addAttendance.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.attendance.push(action.payload);
+        if (action.payload) {
+          state.attendance.push(action.payload);
+        }
       })
       .addCase(getAttendance.pending, (state) => {
         state.isLoading = true;
@@ -115,7 +117,7 @@ const attendanceSlice = createSlice({
       })
       .addCase(getAttendance.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.attendance = action.payload;
+        state.attendance = action.payload ?? [];
       })
       .addCase(getAttendanceById.pending, (state) => {
         state.isLoading = true;
@@ -126,7 +128,7 @@ const attendanceSlice = createSlice({
       })
       .addCase(getAttendanceById.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.attendance = [action.payload];
+        state.attendance = action.payload ? [action.payload] : [];
       })
       .addCase(getAttendanceByEvent.pending, (state) => {
         state.isLoading = true;
@@ -137,7 +139,7 @@ const attendanceSlice = createSlice({
       })
       .addCase(getAttendanceByEvent.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.attendance = action.payload;
+        state.attendance = action.payload ?? [];
       })
       .addCase(getAttendanceByUser.pending, (state) => {
         state.isLoading = true;
@@ -148,7 +150,7 @@ const attendanceSlice = createSlice({
       })
       .addCase(getAttendanceByUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.attendance = action.payload;
+        state.attendance = action.payload ?? [];
       })
       .addCase(updateAttendanceStatus.pending, (state) => {
         state.isLoading = true;

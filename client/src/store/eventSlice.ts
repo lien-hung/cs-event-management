@@ -142,7 +142,7 @@ const eventSlice = createSlice({
     });
     builder.addCase(getEvent.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.events = action.payload;
+      state.events = action.payload ?? [];
     });
     builder.addCase(getEvent.rejected, (state, action) => {
       state.isLoading = false;
@@ -153,7 +153,9 @@ const eventSlice = createSlice({
     });
     builder.addCase(addEvent.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.events.push(action.payload);
+      if (action.payload) {
+        state.events.push(action.payload);
+      }
     });
     builder.addCase(addEvent.rejected, (state, action) => {
       state.isLoading = false;
@@ -177,7 +179,7 @@ const eventSlice = createSlice({
     });
     builder.addCase(getEventById.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.events = [action.payload];
+      state.events = action.payload ? [action.payload] : [];
     });
     builder.addCase(getEventById.rejected, (state, action) => {
       state.isLoading = false;
@@ -195,8 +197,8 @@ const eventSlice = createSlice({
       state.events[index].name = name;
       state.events[index].description = description;
       state.events[index].image = image;
-      state.events[index].startDate = startDate;
-      state.events[index].endDate = endDate;
+      state.events[index].startDate = startDate.toLocaleString("en-GB");
+      state.events[index].endDate = endDate.toLocaleString("en-GB");
       state.events[index].location = location;
       state.events[index].capacity = capacity;
     });

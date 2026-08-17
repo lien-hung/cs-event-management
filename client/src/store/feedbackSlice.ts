@@ -100,7 +100,7 @@ const feedbackSlice = createSlice({
       })
       .addCase(getFeedback.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.feedbacks = action.payload;
+        state.feedbacks = action.payload ?? [];
       })
       .addCase(getFeedback.rejected, (state, action) => {
         state.isLoading = false;
@@ -111,7 +111,7 @@ const feedbackSlice = createSlice({
       })
       .addCase(getFeedbackByEvent.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.feedbacks = action.payload;
+        state.feedbacks = action.payload ?? [];
       })
       .addCase(getFeedbackByEvent.rejected, (state, action) => {
         state.isLoading = false;

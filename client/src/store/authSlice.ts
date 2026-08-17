@@ -84,6 +84,8 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(login.fulfilled, (state, action) => {
+        if (!action.payload) return;
+
         const { user, roles, token } = action.payload;
         state.isLoading = false;
         state.currentUser = user;
