@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using Azure.Identity;
 using EventManagement.Auth;
 using EventManagement.Controllers;
 using EventManagement.Persistence;
@@ -13,6 +14,11 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+builder.Configuration.AddAzureKeyVault(
+    new Uri(builder.Configuration.GetValue<string>("AzureAd:KeyVaultUrl")!),
+    new DefaultAzureCredential()
+);
+
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()!;
 
 // Add services to the container.
