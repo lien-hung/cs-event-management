@@ -41,7 +41,7 @@ public static class AuthController
             request.PhoneNumber,
             request.Avatar,
             UserRole.User
-        ));    
+        ));
 
         return Results.Ok();
     }
@@ -54,11 +54,11 @@ public static class AuthController
         {
             return Results.Unauthorized();
         }
-        
+
         var roles = await userManager.GetRolesAsync(user);
         var (token, expiresAt) = tokenService.CreateToken(user, roles);
 
-        return Results.Ok(new AuthResponse(userInDb, user.Email!, roles, token, expiresAt));        
+        return Results.Ok(new AuthResponse(userInDb, user.Email!, roles, token, expiresAt));
     }
 
     private static async Task<IResult> AddRoleAsync(AddRoleRequest request, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IUserService userService)
@@ -75,7 +75,7 @@ public static class AuthController
         }
 
         await userManager.AddToRoleAsync(user, request.Role);
-        await userService.UpdateUserRoleAsync(request.Email, request.Role);   
+        await userService.UpdateUserRoleAsync(request.Email, request.Role);
 
         return Results.Ok();
     }

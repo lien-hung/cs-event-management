@@ -19,14 +19,9 @@ interface IUserService
     Task DeleteUserAsync(int id);
 }
 
-public class UserService : IUserService
+public class UserService(AppDbContext context) : IUserService
 {
-    private readonly AppDbContext _context;
-
-    public UserService(AppDbContext context)
-    {
-        _context = context;
-    }
+    private readonly AppDbContext _context = context;
 
     public async Task<UserDto> CreateUserAsync(CreateUserDto dto)
     {
