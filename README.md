@@ -3,11 +3,14 @@
 This project contains source code for management of events and activities for university students. It is based on [a past group project](https://github.com/lien-hung/soa-event-management) of mine, but modernized and uses .NET for backend instead of Java.
 
 ## Usage
+Access the site URL: https://lien-hung.github.io/cs-event-management
 
-Clone the source code and apply the following commands:
-
-- Backend: `dotnet run --project EventManagement`
-- Frontend: `npm install && npm run dev`
+- Example admin account:
+  - Email: admin@example.com
+  - Password: `Admin123!`
+- Example user account:
+  - Email: xnguyen.3126123456@st.ueh.edu.vn
+  - Password: `3126123456@Ueh`
 
 ## Tech Stack
 
