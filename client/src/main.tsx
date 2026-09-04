@@ -65,7 +65,9 @@ const router = createBrowserRouter([
     path: "login",
     Component: SignIn,
   },
-]);
+], {
+  basename: "/cs-event-management",
+});
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
