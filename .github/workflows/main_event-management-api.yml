@@ -12,6 +12,10 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./server
+        
     permissions:
       contents: read #This is required for actions/checkout
 
