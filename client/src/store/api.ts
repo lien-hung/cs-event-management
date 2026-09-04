@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-const baseUrl = "http://localhost:5146";
+const baseUrl = "https://event-management-api-f2ayc6fagkd7d6dd.southeastasia-01.azurewebsites.net";
 const token = Cookies.get("token");
 
 const API = {

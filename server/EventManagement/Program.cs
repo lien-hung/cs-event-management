@@ -16,7 +16,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 builder.Configuration.AddAzureKeyVault(
     new Uri(builder.Configuration.GetValue<string>("AzureAd:KeyVaultUrl")!),
-    new DefaultAzureCredential()
+    new DefaultAzureCredential(new DefaultAzureCredentialOptions
+    {
+        ManagedIdentityClientId = builder.Configuration["AzureAd:ManagedIdentityClientId"]
+    })
 );
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>()!;
