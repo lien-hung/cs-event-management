@@ -39,11 +39,7 @@ export const Header = () => {
       <nav className="navbar navbar-expand-lg fixed z-50 w-full text-center bg-white navbar-light shadow-sm px-5 py-3 py-lg-0">
         <Link to="/" className="navbar-brand p-0">
           <h1 className="m-0 text-primary">
-            <img
-              src="https://hotro.ueh.edu.vn/images/logo-ueh-footer.png"
-              alt="home-logo"
-              style={{ width: "30%" }}
-            />
+            <img src="img/logo.png" alt="home-logo" style={{ width: "30%" }} />
           </h1>
         </Link>
         <button

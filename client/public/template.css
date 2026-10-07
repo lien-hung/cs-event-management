@@ -150,7 +150,7 @@ h6,
 .carousel-control-prev,
 .carousel-control-next {
     width: 10%;
-    height: 150%;
+    height: 100%;
 }
 
 .carousel-control-prev-icon,
@@ -237,7 +237,7 @@ h6,
 }
 
 .bg-offer {
-    background: url(../img/bg-off.jpg) center center no-repeat;
+    background: url(./img/bg-off.jpg) center center no-repeat;
     background-size: cover;
 }
 

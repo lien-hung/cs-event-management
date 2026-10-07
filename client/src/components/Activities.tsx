@@ -35,7 +35,7 @@ export function Activities() {
           <div className="col-lg-12">
             <div className="section-title mb-4">
               <h5
-                style={{ fontSize: "50px", marginBottom: "20px" }}
+                style={{ fontSize: "50px", margin: "0 30px 20px" }}
                 className="position-relative text-center text-primary text-uppercase"
               >
                 Sự kiện

@@ -1,6 +1,6 @@
 export const PostNew = () => {
   return (
-    <div className="container-fluid bg-offer py-5 wow animate__animated animate__fadeInUp" data-wow-delay="0.1s" >
+    <div className="container-fluid bg-offer py-5 wow animate__animated animate__fadeInUp" data-wow-delay="0.1s">
       <div className="container py-5">
         <div className="row justify-content-center">
           <div className="col-lg-7 wow animate__animated animate__zoomIn" data-wow-delay="0.6s">

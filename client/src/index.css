@@ -10,9 +10,8 @@
 }
 
 .d-flex {
-  padding-left: 330px;
   width: 70%;
-  padding-top: 50px;
+  margin: auto;
 }
 
 h3 {
