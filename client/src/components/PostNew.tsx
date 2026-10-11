@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export const PostNew = () => {
   return (
     <div className="container-fluid bg-offer py-5 wow animate__animated animate__fadeInUp" data-wow-delay="0.1s">
@@ -9,7 +11,7 @@ export const PostNew = () => {
               <p className="text-white mb-4">
                 Tích lũy kỹ năng và trải nghiệm thú vị, nâng cao kết quả rèn luyện. Hãy nắm bắt!
               </p>
-              <a href="/login" className="btn btn-dark py-3 px-5 me-3">Tìm Hiểu Thêm</a>
+              <Link to={"/login"} className="btn btn-dark py-3 px-5 me-3">Tìm Hiểu Thêm</Link>
             </div>
           </div>
         </div>

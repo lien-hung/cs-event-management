@@ -66,7 +66,7 @@ const router = createBrowserRouter([
     Component: SignIn,
   },
 ], {
-  basename: "/cs-event-management",
+  basename: "/cs-event-management/",
 });
 
 createRoot(document.getElementById('root')!).render(

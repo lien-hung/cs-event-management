@@ -11,12 +11,15 @@ export const AttendanceHistory = () => {
   const auth = useAppSelector((state) => state.auth.currentUser);
   const myAttendance = useAppSelector((state) => state.attendance.attendance);
 
-  useEffect(() => { dispatch(getAttendanceByUser(auth.id)) }, [auth.id, dispatch]);
+  useEffect(() => {
+    if (auth) {
+      dispatch(getAttendanceByUser(auth.id));
+    } else {
+      navigate("/login");
+    }
+  }, [auth, dispatch]);
 
-  if (!auth) {
-    navigate("/login");
-    return null;
-  }
+  if (!auth) return null;
 
   return (
     <div className="pt-36">
