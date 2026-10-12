@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { useAppDispatch } from "../hooks";
 import { login } from "../store/authSlice";
+import { Link } from "react-router";
 
 const schema = yup.object().shape({
   email: yup.string().required("Vui lòng nhập tên email!"),
@@ -372,9 +373,7 @@ export const SignIn = () => {
               </div>
             </form>
             <div className="mt-4 text-sm text-gray-600 text-center">
-              <a href="/">
-                Về trang chủ
-              </a>
+              <Link to={"/"}>Về trang chủ</Link>
             </div>
           </div>
         </div>

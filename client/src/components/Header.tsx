@@ -72,9 +72,9 @@ export const Header = () => {
                 </a>
               ) : (
                 <div className="flex items-center">
-                  <a href="/login" className="nav-link">
+                  <Link to={"/login"} className="nav-link">
                     Đăng Nhập
-                  </a>
+                  </Link>
                 </div>
               )}
               {user && (
